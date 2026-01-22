@@ -43,6 +43,15 @@
       z-index: 3; 
     }
 
+    /* Vista da Galeria */
+    #gallery-view {
+      display: none;
+      min-height: 100vh;
+      background: #000;
+      position: relative;
+      z-index: 100;
+    }
+
     .main-bg-video {
       width: 100%;
       height: 100%;
@@ -62,6 +71,7 @@
       border: 1px solid rgba(255,255,255,0.08);
       box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
       transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
     }
     
     .service-card:hover {
@@ -80,6 +90,16 @@
       transform: translateY(-2px);
     }
 
+    /* Galeria Modal (Zoom) */
+    #gallery-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.98);
+      z-index: 10000;
+      backdrop-filter: blur(15px);
+    }
+
     /* Animação para o ícone de telefone */
     @keyframes phone-pulse {
       0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(146, 64, 14, 0.7); }
@@ -88,6 +108,23 @@
     }
     .animate-phone {
       animation: phone-pulse 2s infinite;
+    }
+
+    /* Menu de Telefone Dropdown */
+    #phone-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 1rem;
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 1.25rem;
+      min-width: 240px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      z-index: 100;
     }
 
     #home, .container-fluid, .mbr-overlay {
@@ -105,59 +142,149 @@
     }
 
     /* Limpeza de overlays externos */
-    body > div[style*="position: fixed"][style*="inset: 0"]:not([class*="content"]):not([class*="video"]) {
+    body > div[style*="position: fixed"][style*="inset: 0"]:not([id*="gallery"]):not([id="gallery-modal"]):not([class*="content"]):not([class*="video"]) {
       display: none !important;
       pointer-events: none !important;
+    }
+
+    .gallery-grid-item {
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      border-radius: 1rem;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery-grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-grid-item:hover img {
+      transform: scale(1.1);
+    }
+    .gallery-grid-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(146, 64, 14, 0);
+      transition: background 0.3s ease;
+    }
+    .gallery-grid-item:hover::after {
+      background: rgba(146, 64, 14, 0.2);
     }
   </style>
 </head>
 <body class="bg-black">
 
   <!-- Background Layer (Vídeo de fundo) -->
-  <div class="video-container">
+  <div id="main-bg" class="video-container">
     <video class="main-bg-video" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1581850518616-bcb8186c443e?auto=format&fit=crop&q=80&w=2070">
       <source src="https://res.cloudinary.com/df1wy37zl/video/upload/v1769112274/NCE_Wood_Work_-_story_1_m7mr7s.mp4" type="video/mp4">
     </video>
   </div>
-  <div class="video-overlay"></div>
+  <div id="main-overlay" class="video-overlay"></div>
 
-  <!-- Conteúdo Principal -->
-  <div class="content-wrapper">
+  <!-- Modal de Galeria (Zoom) -->
+  <div id="gallery-modal" class="flex flex-col items-center justify-center p-6">
+    <button onclick="closeZoom()" class="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-[10001]">
+      <i data-lucide="x" class="w-10 h-10"></i>
+    </button>
+    
+    <div class="flex items-center justify-center relative w-full h-full">
+      <button onclick="prevImg()" class="absolute left-4 text-white hover:text-amber-500 p-2 z-[10001] bg-black/20 rounded-full">
+        <i data-lucide="chevron-left" class="w-10 h-10 md:w-16 md:h-16"></i>
+      </button>
+      
+      <img id="modal-img" src="" alt="Trabalho NCE" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl object-contain">
+      
+      <button onclick="nextImg()" class="absolute right-4 text-white hover:text-amber-500 p-2 z-[10001] bg-black/20 rounded-full">
+        <i data-lucide="chevron-right" class="w-10 h-10 md:w-16 md:h-16"></i>
+      </button>
+    </div>
+    
+    <div id="img-counter" class="mt-4 text-stone-400 font-bold uppercase tracking-widest text-sm"></div>
+  </div>
+
+  <!-- VISTA DE GALERIA EM CADEIA -->
+  <div id="gallery-view" class="pt-32 pb-20 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
+        <div>
+          <h2 id="gallery-title" class="text-4xl md:text-6xl font-bold serif text-amber-500">Galeria</h2>
+          <p class="text-stone-400 mt-2 uppercase tracking-widest text-xs font-bold" data-i18n="gallerySubtitle">Master Craftsmanship by NCE Wood Work</p>
+        </div>
+        <button onclick="exitGallery()" class="flex items-center gap-3 bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl border border-white/10 transition-all font-bold group">
+          <i data-lucide="arrow-left" class="w-5 h-5 group-hover:-translate-x-2 transition-transform"></i>
+          <span data-i18n="backToSite">Voltar ao Site</span>
+        </button>
+      </div>
+
+      <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Imagens geradas por JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL (SITE) -->
+  <div id="main-site-content" class="content-wrapper">
     
     <!-- Navbar -->
     <nav class="fixed w-full glass-nav z-50">
-      <div class="max-w-7xl mx-auto px-6 py-4">
-        <!-- Linha Superior: Nome e Ícone de Telefone Mobile -->
-        <div class="flex justify-between items-center w-full">
-          <!-- Brand Area -->
-          <div class="flex items-center">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col md:flex-row justify-between items-center">
+        
+        <!-- Topo da Navbar: Marca -->
+        <div class="flex justify-between items-center w-full md:w-auto">
+          <div class="flex flex-col items-start leading-tight">
             <span class="text-xl md:text-2xl font-bold tracking-tighter serif">
               NCE <span class="text-amber-600 uppercase ml-1">Wood Work</span>
             </span>
-          </div>
-
-          <!-- Ícone de Telefone Mobile (Apenas Mobile) -->
-          <div class="md:hidden">
-            <a href="tel:9548676463" class="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center text-white animate-phone border border-amber-500/50">
-              <i data-lucide="phone" class="w-5 h-5"></i>
-            </a>
-          </div>
-
-          <!-- Phone Desktop -->
-          <div class="hidden md:block">
-            <a href="tel:9548676463" class="btn btn-primary px-6 py-2 bg-amber-700 rounded-full font-bold text-sm hover:bg-amber-800 transition-all" data-i18n="navBtn">(954) 867-6463</a>
+            <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400 mt-0.5" data-i18n="navExperience">
+              15+ Anos de Excelência Profissional
+            </span>
           </div>
         </div>
 
-        <!-- Linha Inferior: Links de Navegação (Abaixo do nome no Mobile) -->
-        <div class="flex items-center justify-center md:justify-end flex-wrap gap-4 md:gap-8 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-4 md:-mt-8">
+        <!-- Links, Idioma e Telefone (Lado a Lado) -->
+        <div class="flex items-center justify-center md:justify-end flex-wrap gap-4 md:gap-6 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-4 md:mt-0">
           <a href="#home" class="hover:text-amber-500 transition-colors" data-i18n="navHome">Home</a>
           <a href="#services" class="hover:text-amber-500 transition-colors" data-i18n="navServices">Services</a>
           <a href="#contact" class="hover:text-amber-500 transition-colors" data-i18n="navContact">Contact</a>
-          <button onclick="toggleLanguage()" class="bg-white/5 px-3 py-1.5 md:px-4 rounded-full border border-white/10 hover:bg-white/10 transition-all text-stone-300 flex items-center gap-2">
-            <i data-lucide="languages" class="w-3 h-3 text-amber-500"></i>
-            <span id="lang-text">PT</span>
-          </button>
+          
+          <div class="flex items-center gap-4">
+            <!-- Botão de Idioma -->
+            <button onclick="toggleLanguage()" class="bg-white/5 px-3 py-1.5 md:px-4 rounded-full border border-white/10 hover:bg-white/20 transition-all text-stone-300 flex items-center gap-2 h-10">
+              <i data-lucide="languages" class="w-3 h-3 text-amber-500"></i>
+              <span id="lang-text">PT</span>
+            </button>
+
+            <!-- Ícone de Telefone ao lado direito do Idioma -->
+            <div class="relative">
+              <button onclick="togglePhoneMenu()" id="phone-trigger" class="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center text-white animate-phone border border-amber-500/50 hover:bg-amber-600 transition-all shrink-0">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+              </button>
+              
+              <!-- Menu Dropdown de Telefone -->
+              <div id="phone-dropdown" class="text-left">
+                <div class="flex flex-col gap-4">
+                  <a href="tel:+19548676463" class="flex items-center justify-between group">
+                     <div class="flex flex-col">
+                       <span class="text-[10px] text-stone-400 uppercase font-bold">Direct Line 1</span>
+                       <span class="text-lg font-bold text-white group-hover:text-amber-500 transition-colors">+1 (954) 867-6463</span>
+                     </div>
+                     <i data-lucide="external-link" class="w-4 h-4 text-stone-600 group-hover:text-amber-500"></i>
+                  </a>
+                  <a href="tel:+19543802852" class="flex items-center justify-between group">
+                     <div class="flex flex-col">
+                       <span class="text-[10px] text-stone-400 uppercase font-bold">Direct Line 2</span>
+                       <span class="text-lg font-bold text-white group-hover:text-amber-500 transition-colors">+1 (954) 380-2852</span>
+                     </div>
+                     <i data-lucide="external-link" class="w-4 h-4 text-stone-600 group-hover:text-amber-500"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </nav>
@@ -165,9 +292,6 @@
     <!-- Hero Section -->
     <section id="home" class="min-h-screen flex items-center justify-center pt-48 pb-12 md:pt-24">
       <div class="max-w-5xl px-6 text-center">
-        <div class="inline-block px-4 py-1 bg-amber-600/20 border border-amber-600/40 rounded-full text-amber-500 text-[10px] font-black uppercase tracking-[0.2em] mb-8" data-i18n="heroBadge">
-          15+ Years of Master Carpentry
-        </div>
         <h1 class="text-4xl md:text-7xl lg:text-8xl font-bold serif leading-[1.1] mb-8 drop-shadow-2xl" data-i18n="heroTitle">
           Transform Your Home with NCE Wood Work
         </h1>
@@ -175,7 +299,7 @@
           Craftsmanship You Can Trust for Over 15 Years. Turning your vision into a stunning reality.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
-          <a href="#contact" class="w-full sm:w-auto hero-btn-primary text-white px-12 py-5 rounded-xl font-bold text-lg transition-all" data-i18n="btnQuote">
+          <a href="#contact" class="w-full sm:w-auto hero-btn-primary text-white px-12 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl" data-i18n="btnQuote">
             Get a Free Quote
           </a>
           <a href="#services" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white px-12 py-5 rounded-xl font-bold text-lg transition-all" data-i18n="btnServices">
@@ -185,7 +309,7 @@
       </div>
     </section>
 
-    <!-- Marquee de Serviços -->
+    <!-- Marquee -->
     <div class="overflow-hidden bg-white/5 backdrop-blur-sm border-y border-white/5 py-6">
       <div class="flex whitespace-nowrap animate-marquee">
         <div class="flex items-center space-x-12 px-6 text-amber-600/80 font-black uppercase tracking-widest text-sm serif">
@@ -217,12 +341,19 @@
         </div>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div class="service-card p-10 rounded-3xl text-center md:text-left">
-            <div class="w-14 h-14 bg-amber-600/10 rounded-2xl flex items-center justify-center text-amber-500 mb-8 border border-amber-600/20 mx-auto md:mx-0">
-              <i data-lucide="utensils"></i>
+          <!-- Kitchen Cabinets Card -->
+          <div onclick="enterGallery('kitchen')" class="service-card p-10 rounded-3xl text-center md:text-left flex flex-col justify-between group">
+            <div>
+              <div class="w-14 h-14 bg-amber-600/10 rounded-2xl flex items-center justify-center text-amber-500 mb-8 border border-amber-600/20 mx-auto md:mx-0 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                <i data-lucide="utensils"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s1">Kitchen Cabinets</h3>
+              <p class="text-stone-400 leading-relaxed" data-i18n="s1d">Elegant designs that transform your kitchen into a masterpiece of functionality and style.</p>
             </div>
-            <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s1">Kitchen Cabinets</h3>
-            <p class="text-stone-400 leading-relaxed" data-i18n="s1d">Elegant designs that transform your kitchen into a masterpiece of functionality and style.</p>
+            <div class="mt-8 flex items-center gap-2 text-amber-500 font-bold uppercase tracking-widest text-xs group-hover:text-amber-400">
+               <span data-i18n="viewGallery">Ver Galeria Completa</span>
+               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
           </div>
 
           <div class="service-card p-10 rounded-3xl text-center md:text-left">
@@ -233,12 +364,19 @@
             <p class="text-stone-400 leading-relaxed" data-i18n="s2d">Exclusive deals on sales and installation. The best prices on premium wood floors.</p>
           </div>
 
-          <div class="service-card p-10 rounded-3xl text-center md:text-left">
-            <div class="w-14 h-14 bg-amber-600/10 rounded-2xl flex items-center justify-center text-amber-500 mb-8 border border-amber-600/20 mx-auto md:mx-0">
-              <i data-lucide="door-closed"></i>
+          <!-- Custom Doors Card -->
+          <div onclick="enterGallery('doors')" class="service-card p-10 rounded-3xl text-center md:text-left flex flex-col justify-between group">
+            <div>
+              <div class="w-14 h-14 bg-amber-600/10 rounded-2xl flex items-center justify-center text-amber-500 mb-8 border border-amber-600/20 mx-auto md:mx-0 group-hover:bg-amber-600 group-hover:text-white transition-all">
+                <i data-lucide="door-closed"></i>
+              </div>
+              <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s3">Custom Doors</h3>
+              <p class="text-stone-400 leading-relaxed" data-i18n="s3d">Bespoke doors and baseboards crafted with precision to stand the test of time.</p>
             </div>
-            <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s3">Custom Doors</h3>
-            <p class="text-stone-400 leading-relaxed" data-i18n="s3d">Bespoke doors and baseboards crafted with precision to stand the test of time.</p>
+            <div class="mt-8 flex items-center gap-2 text-amber-500 font-bold uppercase tracking-widest text-xs group-hover:text-amber-400">
+               <span data-i18n="viewGallery">Ver Galeria Completa</span>
+               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </div>
           </div>
         </div>
       </div>
@@ -250,8 +388,8 @@
         <div>
           <h2 class="text-4xl md:text-6xl font-bold serif mb-8 leading-tight" data-i18n="contactTitle">Your dream home is just one call away.</h2>
           <div class="flex flex-col lg:flex-row gap-8 justify-center lg:justify-start">
-            <a href="tel:9548676463" class="text-2xl font-bold hover:text-amber-500 transition-colors">(954) 867-6463</a>
-            <a href="tel:9543802852" class="text-2xl font-bold hover:text-amber-500 transition-colors">(954) 380-2852</a>
+            <a href="tel:+19548676463" class="text-2xl font-bold hover:text-amber-500 transition-colors">+1 (954) 867-6463</a>
+            <a href="tel:+19543802852" class="text-2xl font-bold hover:text-amber-500 transition-colors">+1 (954) 380-2852</a>
           </div>
         </div>
       </div>
@@ -261,22 +399,126 @@
   <script>
     lucide.createIcons();
 
+    // Dados das Galerias
+    const galleries = {
+      kitchen: {
+        title: "Kitchen Cabinets",
+        titlePt: "Armários de Cozinha",
+        images: [
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121126/imagem_2_caebkj.png",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121126/imagem_3_qjym8k.png",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121125/imagem_1_ikpzpr.png",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121125/ambiente2_xd4qtg.jpg",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121125/ambiente1_fqynjk.jpg"
+        ]
+      },
+      doors: {
+        title: "Custom Doors & Baseboards",
+        titlePt: "Portas e Portais",
+        images: [
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769122558/portas3_lonilv.jpg",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769122558/portas2_cmousy.jpg",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769122557/portas_uks4cw.jpg",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121126/imagem_4_wxkuwj.png",
+          "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121125/ambiente3_kzjfzj.jpg"
+        ]
+      }
+    };
+
+    let activeGallery = [];
+    let activeImgIdx = 0;
+
+    function enterGallery(type) {
+      const g = galleries[type];
+      activeGallery = g.images;
+      const titleEl = document.getElementById('gallery-title');
+      titleEl.innerText = currentLang === 'pt' ? g.titlePt : g.title;
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = '';
+      g.images.forEach((src, idx) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-grid-item';
+        item.onclick = () => openZoom(idx);
+        item.innerHTML = `<img src="${src}" loading="lazy" alt="Projeto NCE">`;
+        grid.appendChild(item);
+      });
+      document.getElementById('main-site-content').style.display = 'none';
+      document.getElementById('main-bg').style.display = 'none';
+      document.getElementById('main-overlay').style.display = 'none';
+      document.getElementById('gallery-view').style.display = 'block';
+      window.scrollTo(0,0);
+    }
+
+    function exitGallery() {
+      document.getElementById('gallery-view').style.display = 'none';
+      document.getElementById('main-site-content').style.display = 'block';
+      document.getElementById('main-bg').style.display = 'block';
+      document.getElementById('main-overlay').style.display = 'block';
+      window.scrollTo(0, document.getElementById('services').offsetTop - 100);
+    }
+
+    function openZoom(idx) {
+      activeImgIdx = idx;
+      updateZoomModal();
+      document.getElementById('gallery-modal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeZoom() {
+      document.getElementById('gallery-modal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function updateZoomModal() {
+      const modalImg = document.getElementById('modal-img');
+      const counter = document.getElementById('img-counter');
+      modalImg.src = activeGallery[activeImgIdx];
+      counter.innerText = `${activeImgIdx + 1} / ${activeGallery.length}`;
+    }
+
+    function nextImg() {
+      activeImgIdx = (activeImgIdx + 1) % activeGallery.length;
+      updateZoomModal();
+    }
+
+    function prevImg() {
+      activeImgIdx = (activeImgIdx - 1 + activeGallery.length) % activeGallery.length;
+      updateZoomModal();
+    }
+
+    function togglePhoneMenu() {
+      const dropdown = document.getElementById('phone-dropdown');
+      const isVisible = dropdown.style.display === 'block';
+      dropdown.style.display = isVisible ? 'none' : 'block';
+    }
+
+    window.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('phone-dropdown');
+      const trigger = document.getElementById('phone-trigger');
+      if (dropdown && trigger && !trigger.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+      }
+    });
+
     const translations = {
       pt: {
-        navHome: "Início", navServices: "Serviços", navContact: "Contacto", navBtn: "(954) 867-6463",
-        heroBadge: "15+ Anos de Carpintaria de Mestre",
+        navHome: "Início", navServices: "Serviços", navContact: "Contacto",
+        navExperience: "15+ Anos de Excelência Profissional",
         heroTitle: "Transforme a sua Casa com a NCE Wood Work",
         heroSubtitle: "Qualidade artesanal em que pode confiar. Mais de uma década e meia a tornar visões em realidade.",
         btnQuote: "Orçamento Gratuito", btnServices: "Ver Projetos",
         servTitle: "O Que Fazemos Melhor", servSubtitle: "Qualidade sem concessões e satisfação total. Precisão em cada peça.",
         s1: "Armários de Cozinha", s1d: "Designs elegantes que transformam a sua cozinha num exemplo de estilo e funcionalidade.",
         s2: "Piso Laminado", s2d: "Ofertas exclusivas de venda e instalação. Os melhores preços em pavimentos premium.",
-        s3: "Portas à Medida", s3d: "Portas e rodapés exclusivos criados com precisão para durarem uma vida inteira.",
-        contactTitle: "A casa dos seus sonhos está a uma chamada de distância."
+        s3: "Portas e Portais", s3d: "Portas e rodapés exclusivos criados com precisão para durarem uma vida inteira.",
+        contactTitle: "A casa dos seus sonhos está a uma chamada de distância.",
+        viewGallery: "Ver Galeria Completa",
+        gallerySubtitle: "Carpintaria de Mestre pela NCE Wood Work",
+        backToSite: "Voltar ao Site"
       },
       en: {
-        navHome: "Home", navServices: "Services", navContact: "Contact", navBtn: "(954) 867-6463",
-        heroBadge: "15+ Years of Master Carpentry",
+        navHome: "Home", navServices: "Services", navContact: "Contact",
+        navExperience: "15+ Years of Professional Excellence",
         heroTitle: "Transform Your Home with NCE Wood Work",
         heroSubtitle: "Craftsmanship You Can Trust for Over 15 Years. Turning your vision into a stunning reality.",
         btnQuote: "Get a Free Quote", btnServices: "View Our Work",
@@ -284,7 +526,10 @@
         s1: "Kitchen Cabinets", s1d: "Elegant designs that transform your kitchen into a masterpiece of functionality and style.",
         s2: "Laminate Flooring", s2d: "Exclusive deals on sales and installation. The best prices on premium wood floors.",
         s3: "Custom Doors", s3d: "Bespoke doors and baseboards crafted with precision to stand the test of time.",
-        contactTitle: "Your dream home is just one call away."
+        contactTitle: "Your dream home is just one call away.",
+        viewGallery: "View Full Gallery",
+        gallerySubtitle: "Master Craftsmanship by NCE Wood Work",
+        backToSite: "Back to Site"
       }
     };
 
@@ -294,11 +539,7 @@
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (translations[currentLang][key]) {
-           if (el.tagName === 'A' && el.getAttribute('href').startsWith('tel')) {
-              el.innerText = translations[currentLang][key];
-           } else {
-              el.innerText = translations[currentLang][key];
-           }
+           el.innerText = translations[currentLang][key];
         }
       });
       document.getElementById('lang-text').innerText = currentLang === 'pt' ? 'EN' : 'PT';
@@ -308,7 +549,7 @@
       const clean = () => {
         document.querySelectorAll('body > div').forEach(el => {
           const style = el.getAttribute('style') || '';
-          if (style.includes('position: fixed') && style.includes('inset: 0') && !el.classList.contains('content-wrapper') && !el.classList.contains('video-container')) {
+          if (style.includes('position: fixed') && style.includes('inset: 0') && !el.id.includes('gallery') && !el.classList.contains('content-wrapper') && !el.classList.contains('video-container')) {
             el.remove();
           }
         });
