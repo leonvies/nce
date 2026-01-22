@@ -23,10 +23,24 @@
         .serif {
             font-family: 'Playfair Display', serif;
         }
-        .wood-gradient {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=2070');
+        /* Estilos do Slideshow no Hero */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
             background-size: cover;
             background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 0;
+        }
+        .hero-slide.active {
+            opacity: 1;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            z-index: 10;
         }
         .card-hover:hover {
             transform: translateY(-5px);
@@ -80,9 +94,18 @@
         </div>
     </nav>
 
-    <!-- Secção Hero -->
-    <section id="home" class="relative h-screen flex items-center justify-center wood-gradient text-white pt-16">
-        <div class="max-w-4xl px-6 text-center space-y-8">
+    <!-- Secção Hero com Slideshow -->
+    <section id="home" class="relative h-screen flex items-center justify-center text-white pt-16 overflow-hidden">
+        <!-- Imagens de Fundo (Drywall Models) -->
+        <div class="absolute inset-0 z-0">
+            <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=2069');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1505798577917-a65157d3320a?auto=format&fit=crop&q=80&w=2070');"></div>
+            <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1628745277862-bc0b296168d1?auto=format&fit=crop&q=80&w=2070');"></div>
+            <div class="hero-overlay"></div>
+        </div>
+
+        <!-- Conteúdo Principal -->
+        <div class="relative z-20 max-w-4xl px-6 text-center space-y-8">
             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold serif leading-tight" data-i18n="heroTitle">
                 Transforme a sua Casa com a NCE Wood Work
             </h1>
@@ -424,6 +447,19 @@
                 }
             });
         }
+
+        // Lógica do Slideshow do Hero
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.hero-slide');
+        
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Iniciar ciclo de slides a cada 5 segundos
+        setInterval(nextSlide, 5000);
 
         // Inicializar Ícones Lucide
         lucide.createIcons();
