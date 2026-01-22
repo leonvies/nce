@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCE Wood Work | Carpintaria de Mestre e Pavimentos</title>
+    
+    <!-- SEO e Metadados para Redes Sociais (GitHub/Open Graph) -->
+    <meta name="description" content="Mais de 15 anos de experiência em carpintaria de mestre. Armários, pisos e portas por medida.">
+    <meta property="og:title" content="NCE Wood Work | Carpintaria de Confiança">
+    <meta property="og:description" content="Transforme a sua casa com a qualidade artesanal da NCE Wood Work.">
+    <meta property="og:type" content="website">
+    
+    <!-- Scripts Externos -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .wood-gradient {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?auto=format&fit=crop&q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s ease;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-900">
+
+    <!-- Navegação -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i data-lucide="hammer" class="text-amber-800 w-8 h-8"></i>
+                <span class="text-2xl font-bold tracking-tighter serif text-stone-800">NCE <span class="text-amber-800">WOOD WORK</span></span>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-8 font-medium text-stone-600">
+                <a href="#home" class="hover:text-amber-800 transition-colors" data-i18n="navHome">Início</a>
+                <a href="#services" class="hover:text-amber-800 transition-colors" data-i18n="navServices">Serviços</a>
+                <a href="#offer" class="hover:text-amber-800 transition-colors" data-i18n="navOffer">Oferta Especial</a>
+                
+                <!-- Botão de Tradução Desktop -->
+                <button onclick="toggleLanguage()" class="flex items-center space-x-2 bg-stone-100 px-3 py-1 rounded-full hover:bg-stone-200 transition-all border border-stone-200">
+                    <i data-lucide="languages" class="w-4 h-4 text-amber-800"></i>
+                    <span id="lang-text" class="text-xs font-bold uppercase tracking-widest text-stone-700">EN</span>
+                </button>
+
+                <a href="tel:9548676463" class="hover:text-amber-800 transition-colors text-amber-900 font-bold underline underline-offset-4">(954) 867-6463</a>
+            </div>
+
+            <div class="flex items-center space-x-4 md:hidden">
+                <button onclick="toggleLanguage()" class="flex items-center space-x-1 bg-stone-100 px-3 py-1 rounded-full border border-stone-200">
+                    <i data-lucide="languages" class="w-4 h-4 text-amber-800"></i>
+                    <span id="lang-text-mobile" class="text-xs font-bold uppercase tracking-widest text-stone-700">EN</span>
+                </button>
+                <button class="text-stone-800" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                    <i data-lucide="menu"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Menu Mobile Simples -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 space-y-4 text-center shadow-lg">
+            <a href="#home" class="block" data-i18n="navHome">Início</a>
+            <a href="#services" class="block" data-i18n="navServices">Serviços</a>
+            <a href="#offer" class="block" data-i18n="navOffer">Oferta Especial</a>
+            <a href="tel:9548676463" class="block font-bold text-amber-800">(954) 867-6463</a>
+        </div>
+    </nav>
+
+    <!-- Secção Hero -->
+    <section id="home" class="relative h-screen flex items-center justify-center wood-gradient text-white pt-16">
+        <div class="max-w-4xl px-6 text-center space-y-8">
+            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold serif leading-tight" data-i18n="heroTitle">
+                Transforme a sua Casa com a NCE Wood Work
+            </h1>
+            <p class="text-xl md:text-2xl font-light text-stone-200" data-i18n="heroSubtitle">
+                Qualidade Artesanal em que pode confiar há mais de 15 anos!
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="#contact" class="bg-amber-700 hover:bg-amber-800 text-white px-8 py-4 rounded-lg font-bold transition-all text-lg shadow-xl" data-i18n="heroBtnQuote">
+                    Peça um Orçamento Gratuito
+                </a>
+                <a href="#services" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 py-4 rounded-lg font-bold transition-all text-lg" data-i18n="heroBtnWork">
+                    Ver os Nossos Projetos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introdução -->
+    <section class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
+            <div class="space-y-6">
+                <h2 class="text-3xl md:text-4xl font-bold serif text-stone-800" data-i18n="introTitle">Carpintaria de Mestre para a Sua Visão</h2>
+                <p class="text-lg text-stone-600 leading-relaxed" data-i18n="introText">
+                    Na NCE Wood Work, trazemos mais de uma década e meia de experiência em carpintaria para cada projeto. Do design de armários elegantes a pavimentos laminados deslumbrantes, especializamo-nos em tornar a sua visão realidade.
+                </p>
+                <div class="grid grid-cols-2 gap-6 pt-4">
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="text-amber-700 w-6 h-6 shrink-0"></i>
+                        <span class="font-medium" data-i18n="featExp">15+ Anos de Experiência</span>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="text-amber-700 w-6 h-6 shrink-0"></i>
+                        <span class="font-medium" data-i18n="featQuality">Qualidade Sem Concessões</span>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="text-amber-700 w-6 h-6 shrink-0"></i>
+                        <span class="font-medium" data-i18n="featPrecision">Precisão Artesanal</span>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="check-circle" class="text-amber-700 w-6 h-6 shrink-0"></i>
+                        <span class="font-medium" data-i18n="featSatisfaction">Satisfação Total</span>
+                    </div>
+                </div>
+            </div>
+            <div class="relative">
+                <img src="https://images.unsplash.com/photo-1558444479-c84824d2927e?auto=format&fit=crop&q=80&w=1000" alt="Trabalho de Carpintaria" class="rounded-2xl shadow-2xl">
+                <div class="absolute -bottom-6 -left-6 bg-amber-800 text-white p-8 rounded-xl shadow-xl hidden lg:block">
+                    <p class="text-4xl font-bold">15+</p>
+                    <p class="text-sm uppercase tracking-widest" data-i18n="badgeText">Anos de Excelência</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Grelha de Serviços -->
+    <section id="services" class="py-24 bg-stone-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold serif text-stone-800" data-i18n="servicesTitle">As Nossas Especialidades</h2>
+                <div class="h-1 w-20 bg-amber-700 mx-auto mt-4"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Armários -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-stone-100">
+                    <div class="bg-stone-50 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="layout-grid" class="text-amber-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="service1Title">Armários de Cozinha</h3>
+                    <p class="text-stone-600" data-i18n="service1Desc">Designs elegantes e funcionais que transformam a sua cozinha numa obra-prima.</p>
+                </div>
+                <!-- Pavimento -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-stone-100">
+                    <div class="bg-stone-50 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="layers" class="text-amber-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="service2Title">Piso Laminado</h3>
+                    <p class="text-stone-600" data-i18n="service2Desc">Soluções de pavimento deslumbrantes com materiais duradouros e instalação impecável.</p>
+                </div>
+                <!-- Portas -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-stone-100">
+                    <div class="bg-stone-50 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="door-closed" class="text-amber-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="service3Title">Portas à Medida</h3>
+                    <p class="text-stone-600" data-i18n="service3Desc">Designs exclusivos que aumentam a segurança e o apelo estético da sua casa.</p>
+                </div>
+                <!-- Rodapés -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-stone-100">
+                    <div class="bg-stone-50 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="maximize-2" class="text-amber-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="service4Title">Rodapés</h3>
+                    <p class="text-stone-600" data-i18n="service4Desc">Rodapés ajustados com precisão que dão o toque final perfeito a qualquer divisão.</p>
+                </div>
+                <!-- Roupeiros -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm card-hover border border-stone-100">
+                    <div class="bg-stone-50 w-16 h-16 rounded-xl flex items-center justify-center mb-6">
+                        <i data-lucide="box" class="text-amber-800 w-8 h-8"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4" data-i18n="service5Title">Roupeiros Personalizados</h3>
+                    <p class="text-stone-600" data-i18n="service5Desc">Soluções de armazenamento criadas para maximizar o seu espaço e organização.</p>
+                </div>
+                <!-- Call to action -->
+                <div class="bg-amber-800 p-8 rounded-2xl shadow-sm card-hover text-white flex flex-col justify-center">
+                    <h3 class="text-2xl font-bold mb-4 serif" data-i18n="ctaTitle">Projeto Único?</h3>
+                    <p class="mb-6 opacity-90 text-stone-100" data-i18n="ctaText">Se tem uma visão especial, temos as ferramentas e o talento para a construir.</p>
+                    <a href="tel:9548676463" class="text-white font-bold underline underline-offset-4" data-i18n="ctaLink">Fale com um especialista →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Oferta Especial -->
+    <section id="offer" class="py-24 bg-amber-900 text-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-2 items-center gap-12">
+                <div class="space-y-6">
+                    <div class="inline-block bg-amber-500 text-amber-950 px-4 py-1 rounded-full text-sm font-bold tracking-wider uppercase" data-i18n="offerTag">
+                        Oferta por Tempo Limitado
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold serif" data-i18n="offerTitle">Pisos de Madeira Premium, Preços Imbatíveis</h2>
+                    <p class="text-xl text-amber-100/90 leading-relaxed" data-i18n="offerText">
+                        Aproveite agora as nossas ofertas exclusivas na venda e instalação de pisos laminados. Garantimos alguns dos melhores preços da região para pisos de alta qualidade.
+                    </p>
+                    <div class="pt-4">
+                        <a href="tel:9548676463" class="inline-flex items-center space-x-3 bg-white text-amber-900 px-8 py-4 rounded-lg font-bold hover:bg-amber-50 transition-colors shadow-lg">
+                            <i data-lucide="phone"></i>
+                            <span data-i18n="offerBtn">Aproveitar Esta Oferta</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1581850518616-bcb8186c443e?auto=format&fit=crop&q=80&w=600" alt="Piso de Madeira" class="rounded-xl shadow-lg transform translate-y-8">
+                    <img src="https://images.unsplash.com/photo-1615876234586-44c139c8c740?auto=format&fit=crop&q=80&w=600" alt="Textura de Madeira" class="rounded-xl shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto / Rodapé -->
+    <footer id="contact" class="py-24 bg-stone-900 text-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-24">
+                <div class="space-y-12">
+                    <div>
+                        <h2 class="text-4xl font-bold serif mb-6" data-i18n="contactTitle">A casa dos seus sonhos está a uma chamada de distância.</h2>
+                        <p class="text-stone-400 text-lg" data-i18n="contactText">Comece a transformar o seu espaço com a NCE Wood Work. Estamos prontos para discutir o seu próximo projeto.</p>
+                    </div>
+                    
+                    <div class="space-y-8">
+                        <div class="flex items-center space-x-6">
+                            <div class="bg-stone-800 p-4 rounded-full text-amber-500">
+                                <i data-lucide="phone-call" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-stone-500 uppercase tracking-widest" data-i18n="contactLabel1">Escritório Principal</p>
+                                <a href="tel:9548676463" class="text-2xl font-bold hover:text-amber-500 transition-colors">(954) 867-6463</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-6">
+                            <div class="bg-stone-800 p-4 rounded-full text-amber-500">
+                                <i data-lucide="smartphone" class="w-8 h-8"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-stone-500 uppercase tracking-widest" data-i18n="contactLabel2">Contacto Secundário</p>
+                                <a href="tel:9543802852" class="text-2xl font-bold hover:text-amber-500 transition-colors">(954) 380-2852</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-stone-800 p-8 md:p-12 rounded-3xl">
+                    <h3 class="text-2xl font-bold serif mb-8" data-i18n="formTitle">Pedido de Orçamento</h3>
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-stone-400 mb-2" data-i18n="formLabelName">Nome Completo</label>
+                            <input type="text" required class="w-full bg-stone-700 border-none rounded-lg p-4 focus:ring-2 focus:ring-amber-500 outline-none text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-stone-400 mb-2" data-i18n="formLabelPhone">Telemóvel</label>
+                            <input type="tel" required class="w-full bg-stone-700 border-none rounded-lg p-4 focus:ring-2 focus:ring-amber-500 outline-none text-white">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-stone-400 mb-2" data-i18n="formLabelProject">Tipo de Projeto</label>
+                            <select class="w-full bg-stone-700 border-none rounded-lg p-4 focus:ring-2 focus:ring-amber-500 outline-none text-white appearance-none">
+                                <option data-i18n="opt1">Piso Laminado</option>
+                                <option data-i18n="opt2">Armários de Cozinha</option>
+                                <option data-i18n="opt3">Portas Personalizadas</option>
+                                <option data-i18n="opt4">Roupeiros</option>
+                                <option data-i18n="opt5">Outros</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-amber-700 hover:bg-amber-800 text-white font-bold py-4 rounded-lg transition-all shadow-lg" data-i18n="formBtn">
+                            Enviar Mensagem
+                        </button>
+                    </form>
+                    <div id="successMessage" class="hidden mt-6 p-4 bg-green-900/50 text-green-200 rounded-lg text-center font-medium" data-i18n="formSuccess">
+                        Obrigado! Entraremos em contacto brevemente.
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-24 pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center text-stone-500 text-sm">
+                <p>&copy; 2024 NCE Wood Work. <span data-i18n="footerRights">Todos os direitos reservados.</span></p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-amber-500 transition-colors" data-i18n="footerPrivacy">Privacidade</a>
+                    <a href="#" class="hover:text-amber-500 transition-colors" data-i18n="footerTerms">Termos de Serviço</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dicionário de Tradução
+        const translations = {
+            pt: {
+                navHome: "Início",
+                navServices: "Serviços",
+                navOffer: "Oferta Especial",
+                heroTitle: "Transforme a sua Casa com a NCE Wood Work",
+                heroSubtitle: "Qualidade Artesanal em que pode confiar há mais de 15 anos!",
+                heroBtnQuote: "Peça um Orçamento Gratuito",
+                heroBtnWork: "Ver os Nossos Projetos",
+                introTitle: "Carpintaria de Mestre para a Sua Visão",
+                introText: "Na NCE Wood Work, trazemos mais de uma década e meia de experiência em carpintaria para cada projeto. Do design de armários elegantes a pavimentos laminados deslumbrantes, especializamo-nos em tornar a sua visão realidade.",
+                featExp: "15+ Anos de Experiência",
+                featQuality: "Qualidade Sem Concessões",
+                featPrecision: "Precisão Artesanal",
+                featSatisfaction: "Satisfação Total",
+                badgeText: "Anos de Excelência",
+                servicesTitle: "As Nossas Especialidades",
+                service1Title: "Armários de Cozinha",
+                service1Desc: "Designs elegantes e funcionais que transformam a sua cozinha numa obra-prima.",
+                service2Title: "Piso Laminado",
+                service2Desc: "Soluções de pavimento deslumbrantes com materiais duradouros e instalação impecável.",
+                service3Title: "Portas à Medida",
+                service3Desc: "Designs exclusivos que aumentam a segurança e o apelo estético da sua casa.",
+                service4Title: "Rodapés",
+                service4Desc: "Rodapés ajustados com precisão que dão o toque final perfeito a qualquer divisão.",
+                service5Title: "Roupeiros Personalizados",
+                service5Desc: "Soluções de armazenamento criadas para maximizar o seu espaço e organização.",
+                ctaTitle: "Projeto Único?",
+                ctaText: "Se tem uma visão especial, temos as ferramentas e o talento para a construir.",
+                ctaLink: "Fale com um especialista →",
+                offerTag: "Oferta por Tempo Limitado",
+                offerTitle: "Pisos de Madeira Premium, Preços Imbatíveis",
+                offerText: "Aproveite agora as nossas ofertas exclusivas na venda e instalação de pisos laminados. Garantimos alguns dos melhores preços da região para pisos de alta qualidade.",
+                offerBtn: "Aproveitar Esta Oferta",
+                contactTitle: "A casa dos seus sonhos está a uma chamada de distância.",
+                contactText: "Comece a transformar o seu espaço com a NCE Wood Work. Estamos prontos para discutir o seu próximo projeto.",
+                contactLabel1: "Escritório Principal",
+                contactLabel2: "Contacto Secundário",
+                formTitle: "Pedido de Orçamento",
+                formLabelName: "Nome Completo",
+                formLabelPhone: "Telemóvel",
+                formLabelProject: "Tipo de Projeto",
+                opt1: "Piso Laminado",
+                opt2: "Armários de Cozinha",
+                opt3: "Portas Personalizadas",
+                opt4: "Roupeiros",
+                opt5: "Outros",
+                formBtn: "Enviar Mensagem",
+                formSuccess: "Obrigado! Entraremos em contacto brevemente.",
+                footerRights: "Todos os direitos reservados.",
+                footerPrivacy: "Privacidade",
+                footerTerms: "Termos de Serviço"
+            },
+            en: {
+                navHome: "Home",
+                navServices: "Services",
+                navOffer: "Special Offer",
+                heroTitle: "Transform Your Home with NCE Wood Work",
+                heroSubtitle: "Craftsmanship You Can Trust for Over 15 Years!",
+                heroBtnQuote: "Get a Free Quote",
+                heroBtnWork: "View Our Work",
+                introTitle: "Master Carpentry Meets Your Vision",
+                introText: "At NCE Wood Work, we bring over a decade and a half of master carpentry experience to every project. From elegant kitchen cabinets to stunning laminate flooring, we specialize in turning your vision into reality.",
+                featExp: "15+ Years Experience",
+                featQuality: "Uncompromising Quality",
+                featPrecision: "Precision Crafted",
+                featSatisfaction: "Complete Satisfaction",
+                badgeText: "Years of Excellence",
+                servicesTitle: "Our Specialties",
+                service1Title: "Kitchen Cabinets",
+                service1Desc: "Elegant and functional cabinetry designs that transform your kitchen into a masterpiece.",
+                service2Title: "Laminate Flooring",
+                service2Desc: "Stunning flooring solutions with durable materials and flawless installation.",
+                service3Title: "Custom Doors",
+                service3Desc: "Bespoke door designs that enhance your home's security and aesthetic appeal.",
+                service4Title: "Baseboards",
+                service4Desc: "Precision-fitted baseboards that provide the perfect finishing touch to any room.",
+                service5Title: "Tailor-Made Closets",
+                service5Desc: "Custom storage solutions designed to maximize space and organization.",
+                ctaTitle: "Unique Project?",
+                ctaText: "If you have a special vision, we have the tools and talent to build it.",
+                ctaLink: "Talk to an expert →",
+                offerTag: "Limited Time Offer",
+                offerTitle: "Premium Wood Floors, Unbeatable Prices",
+                offerText: "Take advantage now of our exclusive deals on laminate flooring sales and installation. We guarantee some of the best prices in the region for high-quality floors.",
+                offerBtn: "Claim This Offer",
+                contactTitle: "Your dream home is just one call away.",
+                contactText: "Start transforming your space with NCE Wood Work. We are ready to discuss your next project.",
+                contactLabel1: "Main Office",
+                contactLabel2: "Secondary Contact",
+                formTitle: "Request a Quote",
+                formLabelName: "Full Name",
+                formLabelPhone: "Phone Number",
+                formLabelProject: "Project Type",
+                opt1: "Laminate Flooring",
+                opt2: "Kitchen Cabinets",
+                opt3: "Custom Doors",
+                opt4: "Closets",
+                opt5: "Others",
+                formBtn: "Send Message",
+                formSuccess: "Thank you! We will contact you shortly.",
+                footerRights: "All rights reserved.",
+                footerPrivacy: "Privacy",
+                footerTerms: "Terms of Service"
+            }
+        };
+
+        let currentLang = 'pt';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            updateContent();
+            
+            // Update Toggle Button Text
+            const newLabel = currentLang === 'pt' ? 'EN' : 'PT';
+            document.getElementById('lang-text').innerText = newLabel;
+            document.getElementById('lang-text-mobile').innerText = newLabel;
+        }
+
+        function updateContent() {
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[currentLang][key]) {
+                    element.innerText = translations[currentLang][key];
+                }
+            });
+        }
+
+        // Inicializar Ícones Lucide
+        lucide.createIcons();
+
+        // Lógica do Formulário
+        const contactForm = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            contactForm.classList.add('hidden');
+            successMessage.classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
