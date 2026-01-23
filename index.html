@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
   <link rel="shortcut icon" href="https://r.mobirisesite.com/2225302/assets/images/photo-1649083048455-01f6827c24d6.jpeg" type="image/x-icon">
-  <title>NCE Wood Work | Master Carpentry & Remodeling</title>
+  <title>NCE REMODELING | Master Carpentry & Remodeling</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -56,7 +56,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      /* Ajuste solicitado: Prioriza o topo do vídeo para mostrar legendas superiores */
       object-position: center top; 
     }
 
@@ -174,14 +173,14 @@
 
   <!-- Modal de Galeria (Zoom) -->
   <div id="gallery-modal" class="flex flex-col items-center justify-center p-6">
-    <button onclick="closeZoom()" class="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-[10001]">
+    <button onclick="handleZoomClose()" class="absolute top-6 right-6 text-white hover:text-amber-500 transition-colors z-[10001]">
       <i data-lucide="x" class="w-10 h-10"></i>
     </button>
     <div class="flex items-center justify-center relative w-full h-full">
       <button onclick="prevImg()" class="absolute left-4 text-white hover:text-amber-500 p-2 z-[10001] bg-black/20 rounded-full">
         <i data-lucide="chevron-left" class="w-10 h-10 md:w-16 md:h-16"></i>
       </button>
-      <img id="modal-img" src="" alt="Trabalho NCE" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl object-contain">
+      <img id="modal-img" src="" alt="NCE REMODELING Project" class="max-w-full max-h-[85vh] rounded-xl shadow-2xl object-contain">
       <button onclick="nextImg()" class="absolute right-4 text-white hover:text-amber-500 p-2 z-[10001] bg-black/20 rounded-full">
         <i data-lucide="chevron-right" class="w-10 h-10 md:w-16 md:h-16"></i>
       </button>
@@ -194,10 +193,10 @@
     <div class="max-w-7xl mx-auto">
       <div class="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
         <div>
-          <h2 id="gallery-title" class="text-4xl md:text-6xl font-bold serif text-amber-500">Galeria</h2>
-          <p class="text-stone-400 mt-2 uppercase tracking-widest text-xs font-bold" data-i18n="gallerySubtitle">Master Craftsmanship by NCE Wood Work</p>
+          <h2 id="gallery-title" class="text-4xl md:text-6xl font-bold serif text-amber-500 text-center md:text-left">Galeria</h2>
+          <p class="text-stone-400 mt-2 uppercase tracking-widest text-xs font-bold text-center md:text-left" data-i18n="gallerySubtitle">Master Remodeling by NCE REMODELING</p>
         </div>
-        <button onclick="exitGallery()" class="flex items-center gap-3 bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl border border-white/10 transition-all font-bold group">
+        <button onclick="handleGalleryExit()" class="flex items-center gap-3 bg-white/10 hover:bg-white/20 px-8 py-4 rounded-xl border border-white/10 transition-all font-bold group">
           <i data-lucide="arrow-left" class="w-5 h-5 group-hover:-translate-x-2 transition-transform"></i>
           <span data-i18n="backToSite">Voltar ao Site</span>
         </button>
@@ -209,37 +208,32 @@
   <!-- CONTEÚDO PRINCIPAL (SITE) -->
   <div id="main-site-content" class="content-wrapper">
     
-    <!-- Navbar Ajustada para Mobile -->
+    <!-- Navbar -->
     <nav class="fixed w-full glass-nav z-50">
       <div class="max-w-7xl mx-auto px-6 py-4">
         
-        <!-- Linha Superior: Nome, Idioma e Telefone (Lado a Lado no Mobile) -->
+        <!-- Linha Superior -->
         <div class="flex justify-between items-center w-full">
-          <!-- Area da Marca -->
           <div class="flex flex-col items-start leading-tight">
             <span class="text-xl md:text-2xl font-bold tracking-tighter serif">
-              NCE <span class="text-amber-600 uppercase ml-1">Wood Work</span>
+              NCE <span class="text-amber-600 uppercase ml-1">REMODELING</span>
             </span>
             <span class="text-[8px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400 mt-0.5" data-i18n="navExperience">
               15+ Anos de Excelência Profissional
             </span>
           </div>
 
-          <!-- Botoes de Ação (Idioma e Telefone) -->
           <div class="flex items-center gap-3 md:gap-4">
-            <!-- Botão de Idioma -->
             <button onclick="toggleLanguage()" class="bg-white/10 px-3 py-1.5 md:px-4 rounded-full border border-white/20 hover:bg-white/20 transition-all text-stone-300 flex items-center gap-2 h-10">
               <i data-lucide="languages" class="w-3 h-3 text-amber-500"></i>
               <span id="lang-text" class="text-[10px] md:text-xs font-bold">PT</span>
             </button>
 
-            <!-- Ícone de Telefone -->
             <div class="relative">
               <button onclick="togglePhoneMenu()" id="phone-trigger" class="w-10 h-10 bg-amber-700 rounded-full flex items-center justify-center text-white animate-phone border border-amber-500/50 hover:bg-amber-600 transition-all shrink-0">
                 <i data-lucide="phone" class="w-5 h-5"></i>
               </button>
               
-              <!-- Dropdown de Telefone -->
               <div id="phone-dropdown">
                 <div class="flex flex-col gap-4">
                   <a href="tel:+19548676463" class="flex items-center justify-between group">
@@ -262,7 +256,7 @@
           </div>
         </div>
 
-        <!-- Linha Inferior: Links de Navegação (Centralizados no Mobile) -->
+        <!-- Links de Navegação -->
         <div class="flex items-center justify-center md:justify-end flex-wrap gap-6 md:gap-10 text-[10px] md:text-xs font-bold uppercase tracking-widest mt-6 md:mt-4">
           <a href="#home" class="hover:text-amber-500 transition-colors" data-i18n="navHome">Home</a>
           <a href="#services" class="hover:text-amber-500 transition-colors" data-i18n="navServices">Services</a>
@@ -275,10 +269,10 @@
     <section id="home" class="min-h-screen flex items-center justify-center pt-56 pb-12 md:pt-24">
       <div class="max-w-5xl px-6 text-center">
         <h1 class="text-4xl md:text-7xl lg:text-8xl font-bold serif leading-[1.1] mb-8 drop-shadow-2xl" data-i18n="heroTitle">
-          Transform Your Home with NCE Wood Work
+          Transform Your Home with NCE REMODELING
         </h1>
         <p class="text-lg md:text-xl font-light text-stone-200 mb-12 max-w-3xl mx-auto leading-relaxed opacity-90" data-i18n="heroSubtitle">
-          Craftsmanship You Can Trust for Over 15 Years. Turning your vision into a stunning reality.
+          Professional Expertise You Can Trust for Over 15 Years. Turning your vision into a stunning reality.
         </p>
         <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
           <a href="#contact" class="w-full sm:w-auto hero-btn-primary text-white px-12 py-5 rounded-xl font-bold text-lg transition-all shadow-2xl" data-i18n="btnQuote">
@@ -296,16 +290,16 @@
       <div class="flex whitespace-nowrap animate-marquee">
         <div class="flex items-center space-x-12 px-6 text-amber-600/80 font-black uppercase tracking-widest text-sm serif">
           <span>Kitchen Cabinets</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-          <span>Laminate Flooring</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-          <span>Custom Doors</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+          <span>Flooring Tile and Laminate</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+          <span>Bathrooms</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
           <span>Baseboards</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
           <span>Tailor-made Closets</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
           <span>Drywall Models</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
         </div>
         <div class="flex items-center space-x-12 px-6 text-amber-600/80 font-black uppercase tracking-widest text-sm serif">
           <span>Kitchen Cabinets</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-          <span>Laminate Flooring</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
-          <span>Custom Doors</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+          <span>Flooring Tile and Laminate</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
+          <span>Bathrooms</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
           <span>Baseboards</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
           <span>Tailor-made Closets</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
           <span>Drywall Models</span> <span class="w-1.5 h-1.5 bg-amber-600 rounded-full"></span>
@@ -319,7 +313,7 @@
         <div class="text-center mb-24">
           <h2 class="text-4xl md:text-6xl font-bold serif mb-6" data-i18n="servTitle">What We Do Best</h2>
           <div class="h-1.5 w-24 bg-amber-700 mx-auto rounded-full mb-8"></div>
-          <p class="text-stone-400 max-w-2xl mx-auto text-lg" data-i18n="servSubtitle">Uncompromising quality and your complete satisfaction. Precision in every piece.</p>
+          <p class="text-stone-400 max-w-2xl mx-auto text-lg" data-i18n="servSubtitle">Uncompromising quality and your complete satisfaction. Precision in every project.</p>
         </div>
         
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -340,16 +334,16 @@
             <div class="w-14 h-14 bg-amber-600/10 rounded-2xl flex items-center justify-center text-amber-500 mb-8 border border-amber-600/20 mx-auto md:mx-0">
               <i data-lucide="layers"></i>
             </div>
-            <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s2">Laminate Flooring</h3>
-            <p class="text-stone-400 leading-relaxed" data-i18n="s2d">Exclusive deals on sales and installation. The best prices on premium wood floors.</p>
+            <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s2">Flooring Tile and Laminate</h3>
+            <p class="text-stone-400 leading-relaxed" data-i18n="s2d">High-quality installations of premium tile and laminate flooring for every room in your home.</p>
           </div>
-          <div onclick="enterGallery('doors')" class="service-card p-10 rounded-3xl text-center md:text-left flex flex-col justify-between group">
+          <div onclick="enterGallery('bathrooms')" class="service-card p-10 rounded-3xl text-center md:text-left flex flex-col justify-between group">
             <div>
               <div class="w-14 h-14 bg-amber-600/10 rounded-2xl flex items-center justify-center text-amber-500 mb-8 border border-amber-600/20 mx-auto md:mx-0 group-hover:bg-amber-600 group-hover:text-white transition-all">
-                <i data-lucide="door-closed"></i>
+                <i data-lucide="bath"></i>
               </div>
-              <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s3">Custom Doors</h3>
-              <p class="text-stone-400 leading-relaxed" data-i18n="s3d">Bespoke doors and baseboards crafted with precision to stand the test of time.</p>
+              <h3 class="text-2xl font-bold mb-4 serif" data-i18n="s3">Bathrooms</h3>
+              <p class="text-stone-400 leading-relaxed" data-i18n="s3d">Complete bathroom remodeling with luxury finishes and custom solutions for your comfort.</p>
             </div>
             <div class="mt-8 flex items-center gap-2 text-amber-500 font-bold uppercase tracking-widest text-xs group-hover:text-amber-400">
                <span data-i18n="viewGallery">Ver Galeria Completa</span>
@@ -377,7 +371,6 @@
   <script>
     lucide.createIcons();
 
-    // Dados das Galerias
     const galleries = {
       kitchen: {
         title: "Kitchen Cabinets",
@@ -390,9 +383,9 @@
           "https://res.cloudinary.com/df1wy37zl/image/upload/v1769121125/ambiente1_fqynjk.jpg"
         ]
       },
-      doors: {
-        title: "Custom Doors & Baseboards",
-        titlePt: "Portas e Portais",
+      bathrooms: {
+        title: "Bathroom Remodeling",
+        titlePt: "Banheiros",
         images: [
           "https://res.cloudinary.com/df1wy37zl/image/upload/v1769122558/portas3_lonilv.jpg",
           "https://res.cloudinary.com/df1wy37zl/image/upload/v1769122558/portas2_cmousy.jpg",
@@ -406,6 +399,15 @@
     let activeGallery = [];
     let activeImgIdx = 0;
 
+    // --- GESTÃO DE HISTÓRICO (BOTAO VOLTAR) ---
+    window.onpopstate = function(event) {
+      if (document.getElementById('gallery-modal').style.display === 'flex') {
+        closeZoom(false); // Fecha o zoom sem mexer no histórico
+      } else if (document.getElementById('gallery-view').style.display === 'block') {
+        exitGallery(false); // Fecha a galeria sem mexer no histórico
+      }
+    };
+
     function enterGallery(type) {
       const g = galleries[type];
       activeGallery = g.images;
@@ -417,9 +419,13 @@
         const item = document.createElement('div');
         item.className = 'gallery-grid-item';
         item.onclick = () => openZoom(idx);
-        item.innerHTML = `<img src="${src}" loading="lazy" alt="Projeto NCE">`;
+        item.innerHTML = `<img src="${src}" loading="lazy" alt="NCE REMODELING Project">`;
         grid.appendChild(item);
       });
+
+      // Push state para histórico
+      history.pushState({view: 'gallery'}, '');
+
       document.getElementById('main-site-content').style.display = 'none';
       document.getElementById('main-bg').style.display = 'none';
       document.getElementById('main-overlay').style.display = 'none';
@@ -427,22 +433,39 @@
       window.scrollTo(0,0);
     }
 
-    function exitGallery() {
+    function handleGalleryExit() {
+      history.back(); // Isso vai disparar o onpopstate
+    }
+
+    function exitGallery(shouldPopHistory = true) {
       document.getElementById('gallery-view').style.display = 'none';
       document.getElementById('main-site-content').style.display = 'block';
       document.getElementById('main-bg').style.display = 'block';
       document.getElementById('main-overlay').style.display = 'block';
-      window.scrollTo(0, document.getElementById('services').offsetTop - 100);
+      
+      // Pequeno timeout para garantir que o layout renderizou antes do scroll
+      setTimeout(() => {
+        const servicesSection = document.getElementById('services');
+        window.scrollTo({ top: servicesSection.offsetTop - 100, behavior: 'smooth' });
+      }, 10);
     }
 
     function openZoom(idx) {
       activeImgIdx = idx;
       updateZoomModal();
+      
+      // Push state para histórico
+      history.pushState({view: 'zoom'}, '');
+      
       document.getElementById('gallery-modal').style.display = 'flex';
       document.body.style.overflow = 'hidden';
     }
 
-    function closeZoom() {
+    function handleZoomClose() {
+      history.back(); // Isso vai disparar o onpopstate
+    }
+
+    function closeZoom(shouldPopHistory = true) {
       document.getElementById('gallery-modal').style.display = 'none';
       document.body.style.overflow = 'auto';
     }
@@ -482,31 +505,31 @@
       pt: {
         navHome: "Início", navServices: "Serviços", navContact: "Contacto",
         navExperience: "15+ Anos de Excelência Profissional",
-        heroTitle: "Transforme a sua Casa com a NCE Wood Work",
-        heroSubtitle: "Qualidade artesanal em que pode confiar. Mais de uma década e meia a tornar visões em realidade.",
+        heroTitle: "Transforme a sua Casa com a NCE REMODELING",
+        heroSubtitle: "Experiência profissional em que pode confiar há mais de 15 anos. Tornando a sua visão uma realidade deslumbrante.",
         btnQuote: "Orçamento Gratuito", btnServices: "Ver Projetos",
-        servTitle: "O Que Fazemos Melhor", servSubtitle: "Qualidade sem concessões e satisfação total. Precisão em cada peça.",
+        servTitle: "O Que Fazemos Melhor", servSubtitle: "Qualidade sem concessões e satisfação total. Precisão em cada projeto.",
         s1: "Armários de Cozinha", s1d: "Designs elegantes que transformam a sua cozinha num exemplo de estilo e funcionalidade.",
-        s2: "Piso Laminado", s2d: "Ofertas exclusivas de venda e instalação. Os melhores preços em pavimentos premium.",
-        s3: "Portas e Portais", s3d: "Bespoke doors and baseboards crafted with precision to stand the test of time.",
+        s2: "Pisos Cerâmicos e Laminados", s2d: "Instalações de alta qualidade de pisos cerâmicos e laminados premium para todos os ambientes.",
+        s3: "Banheiros", s3d: "Remodelação completa de banheiros com acabamentos de luxo e soluções sob medida.",
         contactTitle: "A casa dos seus sonhos está a uma chamada de distância.",
         viewGallery: "Ver Galeria Completa",
-        gallerySubtitle: "Carpintaria de Mestre pela NCE Wood Work",
+        gallerySubtitle: "Remodelação de Mestre pela NCE REMODELING",
         backToSite: "Voltar ao Site"
       },
       en: {
         navHome: "Home", navServices: "Services", navContact: "Contact",
         navExperience: "15+ Years of Professional Excellence",
-        heroTitle: "Transform Your Home with NCE Wood Work",
-        heroSubtitle: "Craftsmanship You Can Trust for Over 15 Years. Turning your vision into a stunning reality.",
+        heroTitle: "Transform Your Home with NCE REMODELING",
+        heroSubtitle: "Professional Expertise You Can Trust for Over 15 Years. Turning your vision into a stunning reality.",
         btnQuote: "Get a Free Quote", btnServices: "View Our Work",
-        servTitle: "What We Do Best", servSubtitle: "Uncompromising quality and your complete satisfaction. Precision in every piece.",
+        servTitle: "What We Do Best", servSubtitle: "Uncompromising quality and your complete satisfaction. Precision in every project.",
         s1: "Kitchen Cabinets", s1d: "Elegant designs that transform your kitchen into a masterpiece of functionality and style.",
-        s2: "Laminate Flooring", s2d: "Exclusive deals on sales and installation. The best prices on premium wood floors.",
-        s3: "Custom Doors", s3d: "Bespoke doors and baseboards crafted with precision to stand the test of time.",
+        s2: "Flooring Tile and Laminate", s2d: "High-quality installations of premium tile and laminate flooring for every room in your home.",
+        s3: "Bathrooms", s3d: "Complete bathroom remodeling with luxury finishes and custom solutions for your comfort.",
         contactTitle: "Your dream home is just one call away.",
         viewGallery: "View Full Gallery",
-        gallerySubtitle: "Master Craftsmanship by NCE Wood Work",
+        gallerySubtitle: "Master Remodeling by NCE REMODELING",
         backToSite: "Back to Site"
       }
     };
